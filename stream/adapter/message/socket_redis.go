@@ -1,8 +1,8 @@
 package message
 
 import (
-	"github.com/feedlabs/feedify/lib/feedify/redis"
-	"github.com/feedlabs/feedify/lib/feedify/stream"
+	"github.com/feedlabs/feedify/redis"
+	"github.com/feedlabs/feedify/stream"
 )
 
 func init() {

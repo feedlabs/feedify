@@ -9,9 +9,8 @@ import (
 	"github.com/astaxie/beego"
 
 	// feedify packages
-	_ "github.com/feedlabs/feedify/lib/api"
-	"github.com/feedlabs/feedify/lib/feedify/config"
-	_ "github.com/feedlabs/feedify/lib/feedify/stream/adapter/message"
+	"github.com/feedlabs/feedify/config"
+	_ "github.com/feedlabs/feedify/stream/adapter/message"
 )
 
 func Banner() {

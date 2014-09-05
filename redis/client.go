@@ -6,7 +6,7 @@ import (
 	"github.com/fzzy/radix/extra/pubsub"
 	"github.com/fzzy/radix/redis"
 
-	"github.com/feedlabs/feedify/lib/feedify/config"
+	"github.com/feedlabs/feedify/config"
 )
 
 type RedisClient struct {

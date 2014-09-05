@@ -1,7 +1,7 @@
 package service
 
 import (
-	"github.com/feedlabs/feedify/lib/feedify/graph/adapter"
+	"github.com/feedlabs/feedify/graph/adapter"
 )
 
 func NewCayley() *adapter.CayleyAdapter {

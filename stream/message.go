@@ -2,7 +2,7 @@ package stream
 
 import (
 	"errors"
-	"github.com/feedlabs/feedify/lib/feedify/config"
+	"github.com/feedlabs/feedify/config"
 )
 
 type StreamMessage struct {
