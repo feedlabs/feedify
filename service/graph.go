@@ -1,13 +1,13 @@
 package service
 
 import (
+	"github.com/feedlabs/feedify/config"
 	"github.com/feedlabs/feedify/graph/adapter"
 )
 
-func NewCayley() *adapter.CayleyAdapter {
-	return adapter.NewCayleyAdapter()
-}
+func NewGraph() *adapter.Neo4jAdapter {
+	graphAdapter := config.GetConfigKey("service::graph")
+	graphLanguage := config.GetConfigKey(graphAdapter + "::query")
 
-func NewNeo4j() *adapter.Neo4jAdapter {
-	return adapter.NewNeo4jAdapter()
+	return adapter.NewNeo4jAdapter(graphLanguage)
 }
