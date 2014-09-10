@@ -3,15 +3,13 @@ package adapter
 import (
 	"fmt"
 
-	"github.com/jmcvetta/neoism"
-
 	"github.com/feedlabs/feedify/neo4j"
+	"github.com/feedlabs/feedify/graph/adapter/neo4jlang"
 )
 
 type Neo4jAdapter struct {
 	client		*neo4j.Neo4jClient
-	queryLang	string
-	db			  *neoism.Database
+	adapter		*neo4jlang.Neo4jCypher
 }
 
 func (n *Neo4jAdapter) Node() {}
@@ -19,29 +17,7 @@ func (n *Neo4jAdapter) Node() {}
 func (n *Neo4jAdapter) Relation() {}
 
 func (n *Neo4jAdapter) Query() {
-	if n.queryLang != "cypher" {
-		fmt.Println("Unknown neo4j query language `" + n.queryLang + "`")
-		return
-	}
-
-	cq := neoism.CypherQuery{
-		Statement: `
-			START n=node(*)
-			MATCH (n)-[r:outranks]->(m)
-			WHERE n.shirt = {color}
-			RETURN n.name, type(r), m.name
-			`,
-		Parameters: neoism.Props{"color": "blue"},
-		Result: &[]struct {
-			N   string `json:"n.name"`
-			Rel string `json:"type(r)"`
-			M   string `json:"m.name"`
-		}{},
-	}
-
-	n.db.Cypher(&cq)
-
-	fmt.Println(cq.Result)
+	n.adapter.Query()
 }
 
 func (n *Neo4jAdapter) Connect() {
@@ -49,10 +25,11 @@ func (n *Neo4jAdapter) Connect() {
 	if err != nil {
 		fmt.Println("Cannot connect to neo4j database")
 	}
-	n.db = db
+	n.adapter.Db = db
 }
 
 func NewNeo4jAdapter(queryLanguage string) *Neo4jAdapter {
 	client := neo4j.NewNeo4jClient()
-	return &Neo4jAdapter{client, queryLanguage, nil}
+	adapter := neo4jlang.NewNeo4jCypher()
+	return &Neo4jAdapter{client, adapter}
 }
