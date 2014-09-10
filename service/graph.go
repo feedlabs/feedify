@@ -6,9 +6,7 @@ import (
 	"github.com/feedlabs/feedify/graph"
 )
 
-type GraphService struct {
-	Message *graph.GraphAdapterStore
-}
+type GraphService struct {}
 
 func (s *GraphService) Name() string {
 	return "graph-service"
