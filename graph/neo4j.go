@@ -25,6 +25,10 @@ func (n *Neo4jAdapter) Connect() {
 	n.adapter.Connect()
 }
 
+func (n *Neo4jAdapter) Disconnect() {
+	n.adapter.Disconnect()
+}
+
 func (m Neo4jAdapter) SetAdapter(adapter GraphAdapterStore) {
 	m.adapter = adapter
 }
