@@ -33,12 +33,7 @@ type GraphAdapterStore struct {
 
 func (n *GraphAdapterStore) Query(statement string) *graph.GraphQuery {
 	cq := neoism.CypherQuery{
-		Statement: `
-			START n=node(*)
-			MATCH (n)-[r:outranks]->(m)
-			WHERE n.shirt = {color}
-			RETURN n.name, type(r), m.name
-			`,
+		Statement: statement,
 		Parameters: neoism.Props{"color": "blue"},
 		Result: &[]struct {
 			N   string `json:"n.name"`
