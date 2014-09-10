@@ -38,7 +38,7 @@ func (m Neo4jAdapter) GetAdapter() GraphAdapterStore {
 }
 
 func NewNeo4jAdapter() (*Neo4jAdapter, error) {
-	adapter_type := config.GetConfigKey("neo4j::query")
+	adapter_type := config.GetConfigKey("neo4j::adapter")
 	adapter, err := NewAdapterStore("neo4j-" + adapter_type, nil)
 	if err != nil {
 		return nil, errors.New("Cannot load stream message adapter")
