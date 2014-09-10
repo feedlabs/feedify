@@ -24,3 +24,7 @@ message_adapter=socket_redis
 host=localhost
 port=7474
 adapter=cypher
+
+[memcache]
+host=localhost
+port=11211
