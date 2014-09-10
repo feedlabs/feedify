@@ -31,7 +31,7 @@ type GraphAdapterStore struct {
 	db		*neoism.Database
 }
 
-func (n *GraphAdapterStore) Query(query string) *graph.GraphQuery {
+func (n *GraphAdapterStore) Query(statement string) *graph.GraphQuery {
 	cq := neoism.CypherQuery{
 		Statement: `
 			START n=node(*)
