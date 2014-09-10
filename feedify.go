@@ -11,6 +11,7 @@ import (
 	// feedify packages
 	"github.com/feedlabs/feedify/config"
 	_ "github.com/feedlabs/feedify/stream/adapter/message"
+	_ "github.com/feedlabs/feedify/graph/neo4jlang"
 )
 
 func Banner() {
