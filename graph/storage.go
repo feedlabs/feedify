@@ -10,12 +10,12 @@ type GraphStorage struct {
 	adapter GraphAdapterStore
 }
 
-func (g *GraphStorage) Node(id int) *entity.GraphNode {
-	return g.adapter.Node(id)
-}
-
 func (g *GraphStorage) Connect() {
 	g.adapter.Connect()
+}
+
+func (g *GraphStorage) Node(id int) *entity.GraphNode {
+	return g.adapter.Node(id)
 }
 
 func (g *GraphStorage) Query(query string) *entity.GraphQuery {
