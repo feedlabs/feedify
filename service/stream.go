@@ -13,7 +13,7 @@ func (s *StreamService) Name() string {
 	return "stream-service"
 }
 
-func NewStreamService() (*StreamService, error) {
+func NewStream() (*StreamService, error) {
 	message, err := stream.NewStreamMessage()
 	if err != nil {
 		return nil, errors.New("Cannot create stream service.")
