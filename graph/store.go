@@ -3,6 +3,7 @@ package graph
 import (
 	"errors"
 	"github.com/barakmich/glog"
+	"github.com/feedlabs/feedify/graph/entity"
 )
 
 type GraphAdapterStore interface {
@@ -11,15 +12,18 @@ type GraphAdapterStore interface {
 	Connect()
 	Disconnect()
 
-	Database(string) *GraphDatabase
+	Database(string) *entity.GraphDatabase
 
-	Node(int) *GraphNode
-	Relation(int) *GraphRelation
+	Node(int) *entity.GraphNode
+	NewNode() *entity.GraphNode
 
-	FindNodes(map[string]string) *GraphNode
-	FindRelations(map[string]string) *GraphRelation
+	Relation(int) *entity.GraphRelation
+	NewRelation() *entity.GraphRelation
 
-	Query(string) *GraphQuery
+	FindNodes(map[string]string) *entity.GraphNode
+	FindRelations(map[string]string) *entity.GraphRelation
+
+	Query(string) *entity.GraphQuery
 }
 
 type Options map[string]interface{}

@@ -8,7 +8,7 @@ port=10100
 
 [service]
 cache=memcache
-graph=neo4j-cypher
+graph=graph
 stream=stream
 js=otto
 
@@ -27,3 +27,6 @@ port=7474
 [memcache]
 host=localhost
 port=11211
+
+[graph]
+storage_adapter=neo4j_cypher

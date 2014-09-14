@@ -1,3 +1,3 @@
-package graph
+package entity
 
 type GraphRelation struct {}

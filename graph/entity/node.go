@@ -1,4 +1,4 @@
-package graph
+package entity
 
 type GraphNode struct {
 	relations *[]GraphRelation

@@ -7,10 +7,11 @@ import (
 
 	"github.com/feedlabs/feedify/neo4j"
 	"github.com/feedlabs/feedify/graph"
+	"github.com/feedlabs/feedify/graph/entity"
 )
 
 const (
-	NEO4J_CYPHER_PACKAGE_NAME = "neo4j-cypher"
+	NEO4J_CYPHER_PACKAGE_NAME = "neo4j_cypher"
 )
 
 func init() {
@@ -31,7 +32,7 @@ type GraphAdapterStore struct {
 	db		*neoism.Database
 }
 
-func (n *GraphAdapterStore) Query(statement string) *graph.GraphQuery {
+func (n *GraphAdapterStore) Query(statement string) *entity.GraphQuery {
 	cq := neoism.CypherQuery{
 		Statement: statement,
 		Parameters: neoism.Props{"color": "blue"},
@@ -46,7 +47,7 @@ func (n *GraphAdapterStore) Query(statement string) *graph.GraphQuery {
 
 	fmt.Println(cq.Result)
 
-	return &graph.GraphQuery{}
+	return &entity.GraphQuery{}
 }
 
 func (n *GraphAdapterStore) Connect() {
@@ -57,28 +58,36 @@ func (n *GraphAdapterStore) Connect() {
 	n.db = db
 }
 
+func (n *GraphAdapterStore) Disconnect() {}
+
 func (n *GraphAdapterStore) Name() string {
 	return NEO4J_CYPHER_PACKAGE_NAME
 }
 
-func (n *GraphAdapterStore) Disconnect() {}
-
-func (n *GraphAdapterStore) Database(name string) *graph.GraphDatabase {
-	return &graph.GraphDatabase{}
+func (n *GraphAdapterStore) Database(name string) *entity.GraphDatabase {
+	return &entity.GraphDatabase{}
 }
 
-func (n *GraphAdapterStore) Node(id int) *graph.GraphNode {
-	return &graph.GraphNode{}
+func (n *GraphAdapterStore) Node(id int) *entity.GraphNode {
+	return &entity.GraphNode{}
 }
 
-func (n *GraphAdapterStore) Relation(id int) *graph.GraphRelation {
-	return &graph.GraphRelation{}
+func (n *GraphAdapterStore) NewNode() *entity.GraphNode {
+	return &entity.GraphNode{}
 }
 
-func (n *GraphAdapterStore) FindNodes(params map[string]string) *graph.GraphNode {
-	return &graph.GraphNode{}
+func (n *GraphAdapterStore) Relation(id int) *entity.GraphRelation {
+	return &entity.GraphRelation{}
 }
 
-func (n *GraphAdapterStore) FindRelations(params map[string]string) *graph.GraphRelation {
-	return &graph.GraphRelation{}
+func (n *GraphAdapterStore) NewRelation() *entity.GraphRelation {
+	return &entity.GraphRelation{}
+}
+
+func (n *GraphAdapterStore) FindNodes(params map[string]string) *entity.GraphNode {
+	return &entity.GraphNode{}
+}
+
+func (n *GraphAdapterStore) FindRelations(params map[string]string) *entity.GraphRelation {
+	return &entity.GraphRelation{}
 }
