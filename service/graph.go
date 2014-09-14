@@ -12,12 +12,12 @@ func (s *GraphService) Name() string {
 	return "graph-service"
 }
 
-func NewGraph() (*graph.Neo4jAdapter, error) {
+func NewGraph() (graph.GraphAdapterStore, error) {
 	graphAdapter := config.GetConfigKey("service::graph")
 
-	if graphAdapter == "neo4j" {
-		return graph.NewNeo4jAdapter()
+	if graphAdapter != "" {
+		return graph.NewAdapterStore(graphAdapter, nil)
 	}
 
-	return nil, errors.New("Cannot load graph adapter")
+	return nil, errors.New("Cannot load graph adapter '" + graphAdapter + "'")
 }

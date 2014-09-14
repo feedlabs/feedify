@@ -5,11 +5,6 @@ import (
 	"github.com/barakmich/glog"
 )
 
-type GraphNode struct {}
-type GraphRelation struct {}
-type GraphQuery struct {}
-type GraphDatabase struct {}
-
 type GraphAdapterStore interface {
 	Name() string
 
@@ -17,9 +12,14 @@ type GraphAdapterStore interface {
 	Disconnect()
 
 	Database(string) *GraphDatabase
+
 	Node(int) *GraphNode
 	Relation(int) *GraphRelation
-	Query(string) * GraphQuery
+
+	FindNodes(map[string]string) *GraphNode
+	FindRelations(map[string]string) *GraphRelation
+
+	Query(string) *GraphQuery
 }
 
 type Options map[string]interface{}

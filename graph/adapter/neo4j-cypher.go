@@ -1,4 +1,4 @@
-package neo4jlang
+package adapter
 
 import (
 	"fmt"
@@ -72,5 +72,13 @@ func (n *GraphAdapterStore) Node(id int) *graph.GraphNode {
 }
 
 func (n *GraphAdapterStore) Relation(id int) *graph.GraphRelation {
+	return &graph.GraphRelation{}
+}
+
+func (n *GraphAdapterStore) FindNodes(params map[string]string) *graph.GraphNode {
+	return &graph.GraphNode{}
+}
+
+func (n *GraphAdapterStore) FindRelations(params map[string]string) *graph.GraphRelation {
 	return &graph.GraphRelation{}
 }
