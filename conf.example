@@ -6,21 +6,27 @@ copyrequestbody=true
 [feedify]
 port=10100
 
-[service]
-cache=memcache
-graph=neo4j
-stream=stream
-js=otto
-
 [redis]
 host=localhost
 port=6379
 protocol=tcp
 
-[stream]
-message_adapter=socket_redis
-
 [neo4j]
 host=localhost
 port=7474
-adapter=cypher
+
+[memcache]
+host=localhost
+port=11211
+
+[service]
+cache=memcache
+graph=graph
+stream=stream
+js=otto
+
+[stream]
+message_adapter=socket_redis
+
+[graph]
+storage_adapter=neo4j_cypher
