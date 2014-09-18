@@ -1,3 +1,5 @@
 package entity
 
-type GraphQuery struct {}
+type GraphQuery struct {
+	Result	interface{}	`json:"-"`
+}

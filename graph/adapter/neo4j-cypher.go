@@ -35,19 +35,22 @@ type GraphAdapterStore struct {
 }
 
 func (n *GraphAdapterStore) Query(statement string) *entity.GraphQuery {
+	if !n.isConnected {
+		n.Connect()
+	}
+
 	cq := neoism.CypherQuery{
 		Statement: statement,
-		Parameters: neoism.Props{"color": "blue"},
+		Parameters: neoism.Props{},
 		Result: &[]struct {
-			N   string `json:"n.name"`
-			Rel string `json:"type(r)"`
-			M   string `json:"m.name"`
+			N   map[string]string `json:"n"`
+//			N   string `json:"n.data"`
 		}{},
 	}
 
 	n.db.Cypher(&cq)
 
-	return &entity.GraphQuery{}
+	return &entity.GraphQuery{cq.Result}
 }
 
 func (n *GraphAdapterStore) Connect() {
