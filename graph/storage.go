@@ -14,8 +14,24 @@ func (g *GraphStorage) Connect() {
 	g.adapter.Connect()
 }
 
-func (g *GraphStorage) Node(id int) *entity.GraphNode {
+func (g *GraphStorage) Node(id int) (*entity.GraphNode, error) {
 	return g.adapter.Node(id)
+}
+
+func (g *GraphStorage) DeleteNode(id int) (error) {
+	return g.adapter.DeleteNode(id)
+}
+
+func (g *GraphStorage) SetPropertyNode(id int, key string, value string) (error) {
+	return g.adapter.SetPropertyNode(id, key, value)
+}
+
+func (g *GraphStorage) NewNode(p Props, label string) (*entity.GraphNode, error) {
+	return g.adapter.NewNode(p, label)
+}
+
+func (g *GraphStorage) FindNodesByLabel(label string) ([]*entity.GraphNode, error) {
+	return g.adapter.FindNodesByLabel(label)
 }
 
 func (g *GraphStorage) Query(query string) *entity.GraphQuery {

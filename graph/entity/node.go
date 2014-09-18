@@ -1,13 +1,11 @@
 package entity
 
 type GraphNode struct {
-	relations *[]GraphRelation
+	Id				int
+	Data			map[string]interface{} `json:"data"`
+	Extensions		map[string]interface{} `json:"extensions"`
 }
 
 func (n *GraphNode) GetRelation(int) (*GraphRelation) {
 	return &GraphRelation{}
-}
-
-func (n *GraphNode) GetRelations(int) (*[]GraphRelation) {
-	return n.relations
 }

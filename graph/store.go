@@ -6,6 +6,9 @@ import (
 	"github.com/feedlabs/feedify/graph/entity"
 )
 
+// A Props is a set of key/value properties.
+type Props map[string]interface{}
+
 type GraphAdapterStore interface {
 	Name() string
 
@@ -14,13 +17,17 @@ type GraphAdapterStore interface {
 
 	Database(string) *entity.GraphDatabase
 
-	Node(int) *entity.GraphNode
-	NewNode() *entity.GraphNode
+	Node(int) (*entity.GraphNode, error)
+	DeleteNode(int) (error)
+	SetPropertyNode(int, string, string) error
+	NewNode(Props, string) (*entity.GraphNode, error)
 
 	Relation(int) *entity.GraphRelation
 	NewRelation() *entity.GraphRelation
 
 	FindNodes(map[string]string) *entity.GraphNode
+	FindNodesByLabel(string) ([]*entity.GraphNode, error)
+
 	FindRelations(map[string]string) *entity.GraphRelation
 
 	Query(string) *entity.GraphQuery
