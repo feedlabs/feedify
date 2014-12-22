@@ -30,6 +30,18 @@ func (g *GraphStorage) NewNode(p Props, label string) (*entity.GraphNode, error)
 	return g.adapter.NewNode(p, label)
 }
 
+func (g *GraphStorage) RelateNodes(sourceNodeId int, destNodeId int, relationName string, p Props) (*entity.GraphRelation, error) {
+	return g.adapter.RelateNodes(sourceNodeId, destNodeId, relationName, p)
+}
+
+func (g *GraphStorage) RelationshipsNode(id int, name ...string) ([]*entity.GraphRelation, error) {
+	return g.adapter.RelationshipsNode(id, name...)
+}
+
+func (g *GraphStorage) DeleteRelation(id int) (error) {
+	return g.adapter.DeleteRelation(id)
+}
+
 func (g *GraphStorage) FindNodesByLabel(label string) ([]*entity.GraphNode, error) {
 	return g.adapter.FindNodesByLabel(label)
 }

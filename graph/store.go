@@ -19,13 +19,16 @@ type GraphAdapterStore interface {
 
 	Node(int) (*entity.GraphNode, error)
 	DeleteNode(int) (error)
-	SetPropertyNode(int, string, string) error
+	SetPropertyNode(int, string, string) (error)
 	NewNode(Props, string) (*entity.GraphNode, error)
+	RelateNodes(int, int, string, Props) (*entity.GraphRelation, error)
+	RelationshipsNode(int, ...string) ([]*entity.GraphRelation, error)
 
 	Relation(int) *entity.GraphRelation
 	NewRelation() *entity.GraphRelation
+	DeleteRelation(int) (error)
 
-	FindNodes(map[string]string) *entity.GraphNode
+	FindNodes(map[string]string) (*entity.GraphNode)
 	FindNodesByLabel(string) ([]*entity.GraphNode, error)
 
 	FindRelations(map[string]string) *entity.GraphRelation

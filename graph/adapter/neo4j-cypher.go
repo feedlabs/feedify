@@ -85,7 +85,7 @@ func (n *GraphAdapterStore) Node(id int) (*entity.GraphNode, error) {
 		return nil, err
 	}
 
-	return &entity.GraphNode{_n.Id(), _n.Data, _n.Extensions}, nil
+	return ConvertNeoismNodeToNode(_n), nil
 }
 
 func (n *GraphAdapterStore) NewNode(p graph.Props, label string) (*entity.GraphNode, error) {
@@ -100,7 +100,7 @@ func (n *GraphAdapterStore) NewNode(p graph.Props, label string) (*entity.GraphN
 		return nil, err
 	}
 
-	return &entity.GraphNode{_n.Id(), _n.Data, _n.Extensions}, nil
+	return ConvertNeoismNodeToNode(_n), nil
 }
 
 func (n *GraphAdapterStore) DeleteNode(id int) (error) {
@@ -131,12 +131,82 @@ func (n *GraphAdapterStore) SetPropertyNode(id int, key string, value string) (e
 	return _n.SetProperty(key, value)
 }
 
+func (n *GraphAdapterStore) RelateNodes(sourceId int, destId int, name string, p graph.Props) (*entity.GraphRelation, error) {
+	if !n.isConnected {
+		n.Connect()
+	}
+
+	_n, err := n.db.Node(sourceId)
+
+	if err != nil {
+		return nil, err
+	}
+
+	rel, err := _n.Relate(name, destId, neoism.Props(p))
+
+	if err != nil {
+		return nil, err
+	}
+
+	_start, _ := rel.Start()
+	_end, _ := rel.End()
+	startNode := ConvertNeoismNodeToNode(_start)
+	endNode := ConvertNeoismNodeToNode(_end)
+
+	return &entity.GraphRelation{rel.Id(), rel.Type, rel.Data, rel.Extensions, startNode, endNode}, nil
+}
+
+func (n *GraphAdapterStore) RelationshipsNode(id int, name ...string) ([]*entity.GraphRelation, error) {
+	if !n.isConnected {
+		n.Connect()
+	}
+
+	_n, err := n.db.Node(id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	_rels, err := _n.Relationships(name...)
+
+	if err != nil {
+		return nil, err
+	}
+
+	var rels []*entity.GraphRelation
+
+	for _, rel := range _rels {
+		_start, _ := rel.Start()
+		_end, _ := rel.End()
+		startNode := ConvertNeoismNodeToNode(_start)
+		endNode := ConvertNeoismNodeToNode(_end)
+		rel := &entity.GraphRelation{rel.Id(), rel.Type, rel.Data, rel.Extensions, startNode, endNode}
+		rels = append(rels, rel)
+	}
+
+	return rels, nil
+}
+
 func (n *GraphAdapterStore) Relation(id int) *entity.GraphRelation {
 	return &entity.GraphRelation{}
 }
 
 func (n *GraphAdapterStore) NewRelation() *entity.GraphRelation {
 	return &entity.GraphRelation{}
+}
+
+func (n *GraphAdapterStore) DeleteRelation(id int) (error) {
+	if !n.isConnected {
+		n.Connect()
+	}
+
+	_n, err := n.db.Relationship(id)
+
+	if err != nil {
+		return err
+	}
+
+	return _n.Delete()
 }
 
 func (n *GraphAdapterStore) FindNodes(params map[string]string) *entity.GraphNode {
@@ -157,7 +227,7 @@ func (n *GraphAdapterStore) FindNodesByLabel(label string) ([]*entity.GraphNode,
 	var nodes []*entity.GraphNode
 
 	for _, node := range _n {
-		node := &entity.GraphNode{node.Id(), node.Data, node.Extensions}
+		node := ConvertNeoismNodeToNode(node)
 		nodes = append(nodes, node)
 	}
 
@@ -166,4 +236,9 @@ func (n *GraphAdapterStore) FindNodesByLabel(label string) ([]*entity.GraphNode,
 
 func (n *GraphAdapterStore) FindRelations(params map[string]string) *entity.GraphRelation {
 	return &entity.GraphRelation{}
+}
+
+func ConvertNeoismNodeToNode(neoismNode *neoism.Node) *entity.GraphNode {
+	labels, _ := neoismNode.Labels()
+	return &entity.GraphNode{neoismNode.Id(), neoismNode.Data, neoismNode.Extensions, labels}
 }
