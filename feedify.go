@@ -14,8 +14,16 @@ import (
 	_ "github.com/feedlabs/feedify/graph/adapter"
 )
 
+func GetConfigKey(key string) string {
+	return config.GetConfigKey(key)
+}
+
 func Banner() {
 	fmt.Printf("Starting app '%s' on port '%s'\n", config.GetConfigKey("appname"), config.GetConfigKey("feedify::port"))
+}
+
+func SetStaticPath(url string, path string) *beego.App {
+	return beego.SetStaticPath(url, path)
 }
 
 func Run() {
