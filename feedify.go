@@ -26,6 +26,10 @@ func SetStaticPath(url string, path string) *beego.App {
 	return beego.SetStaticPath(url, path)
 }
 
+func Error(v ...interface{}) {
+	beego.Error(v...)
+}
+
 func Run() {
 	Banner()
 
